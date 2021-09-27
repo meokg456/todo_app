@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+import 'package:todo_app/actions/update_todo_status_action/update_todo_status_action.dart';
+import 'package:todo_app/models/app_state/app_state.dart';
 import 'package:todo_app/models/todo/todo.dart';
+import 'package:todo_app/reducers/todo_reducer/todo_reducer.dart';
 
 class TodoWidget extends StatefulWidget {
   const TodoWidget(this.todo);
@@ -19,9 +24,14 @@ class _TodoWidgetState extends State<TodoWidget> {
         color: Theme.of(context).primaryColor,
       ),
       title: Text(widget.todo.note),
-      trailing: Checkbox(
-        value: widget.todo.isCompleted,
-        onChanged: (bool? value) {},
+      trailing: StoreConnector<AppState, Function(bool?)>(
+        converter: (store) => (bool? value) {
+          store.dispatch(UpdateTodoStatusAction(widget.todo.id, !widget.todo.isCompleted));
+        },
+        builder: (context, onCheckBox) => Checkbox(
+          value: widget.todo.isCompleted,
+          onChanged: onCheckBox,
+        ),
       ),
     );
   }
