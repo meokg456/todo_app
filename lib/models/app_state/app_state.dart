@@ -5,11 +5,11 @@ import 'package:todo_app/models/todo/todo.dart';
 
 class AppState {
   AppTab activeTab = AppTab.all;
-  BuiltList todos = BuiltList.of([
+  BuiltList<Todo> todos = BuiltList.of([
     Todo((todo) => todo
       ..id = 1
       ..note = "Do exercise"
-      ..isCompleted = false),
+      ..isCompleted = true),
     Todo((todo) => todo
       ..id = 1
       ..note = "Eat breakfast"
@@ -17,7 +17,7 @@ class AppState {
     Todo((todo) => todo
       ..id = 1
       ..note = "Go to school"
-      ..isCompleted = false),
+      ..isCompleted = true),
     Todo((todo) => todo
       ..id = 1
       ..note = "Have launch"

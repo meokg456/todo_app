@@ -4,6 +4,9 @@ import 'package:redux/redux.dart';
 import 'package:todo_app/actions/update_tab_action/update_tab_action.dart';
 import 'package:todo_app/models/app_state/app_state.dart';
 import 'package:todo_app/models/app_tab/app_tab.dart';
+import 'package:todo_app/screens/main_screen/completed_todos_tab/completed_todos_tab.dart';
+import 'package:todo_app/screens/main_screen/incomplete_todos_tab/incomplete_todos_tab.dart';
+import 'package:todo_app/screens/main_screen/todos_tab/todos_tab.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -14,6 +17,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final tabNames = ["Todos", "Incomplete", "Completed"];
+  final tabViews = [TodosTab(), IncompleteTodosTab(), CompletedTodosTab()];
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,14 @@ class _MainScreenState extends State<MainScreen> {
         ),
         centerTitle: true,
       ),
+      body: StoreConnector<AppState, int>(
+        converter: (store) => store.state.activeTab.index,
+        builder: (context, index) {
+          return tabViews[index];
+        },
+      ),
       floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.edit),
         onPressed: () {},
       ),
       bottomNavigationBar: StoreConnector<AppState, _BottomNavigationBarViewModel>(
