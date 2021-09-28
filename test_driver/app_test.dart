@@ -111,7 +111,6 @@ void main() {
       await driver.enterText("Sleep");
       await Future.delayed(Duration(milliseconds: 500));
       await driver.tap(done);
-      expect(driver.getText(todo), "Sleep");
       await Future.delayed(Duration(milliseconds: 1000));
     });
 
