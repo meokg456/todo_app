@@ -1,19 +1,19 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:todo_app/models/app_state/app_state.dart';
-import 'package:todo_app/models/app_tab/app_tab.dart';
 import 'package:todo_app/models/todo/todo.dart';
+import 'package:todo_app/models/todo/todos_model.dart';
+import 'package:todo_app/models/todo_filter_type/todo_filter_type.dart';
 
-BuiltList<Todo> todosSelector(AppState appState) => appState.todos;
+BuiltList<Todo> todosFilter(AppState appState, TodoFilterType type) {
+  var todosModel = appState.todosModel;
+  switch (type) {
+    case TodoFilterType.completed:
+      return todosModel.completedTodos.map((id) => todosModel.todos[id]!).toBuiltList();
 
-List<Todo> todosFilter(BuiltList<Todo> todos, AppTab appTab) {
-  switch (appTab) {
-    case AppTab.completed:
-      return todos.where((todo) => todo.isCompleted).toList();
-
-    case AppTab.incomplete:
-      return todos.where((todo) => !todo.isCompleted).toList();
+    case TodoFilterType.incomplete:
+      return todosModel.incompleteTodos.map((id) => todosModel.todos[id]!).toBuiltList();
 
     default:
-      return todos.toList();
+      return todosModel.todos.values.toBuiltList();
   }
 }
