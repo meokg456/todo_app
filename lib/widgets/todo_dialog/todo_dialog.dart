@@ -2,15 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/utils/validator.dart';
 
 class TodoDialog extends StatefulWidget {
-  const TodoDialog({Key? key, required note}) : super(key: key);
+  final String note;
 
   @override
   _TodoDialogState createState() => _TodoDialogState();
+
+  TodoDialog({this.note = ""});
 }
 
 class _TodoDialogState extends State<TodoDialog> {
   var _formKey = GlobalKey<FormState>();
   var _textEditingController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _textEditingController.text = widget.note;
+  }
 
   @override
   Widget build(BuildContext context) {

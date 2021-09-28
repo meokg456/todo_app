@@ -5,6 +5,7 @@ import 'package:todo_app/actions/update_todo_status_action/update_todo_status_ac
 import 'package:todo_app/models/app_state/app_state.dart';
 import 'package:todo_app/models/todo/todo.dart';
 import 'package:todo_app/reducers/todo_reducer/todo_reducer.dart';
+import 'package:todo_app/widgets/todo_action_sheet/todo_action_sheet.dart';
 
 class TodoWidget extends StatefulWidget {
   const TodoWidget(this.todo);
@@ -19,6 +20,13 @@ class _TodoWidgetState extends State<TodoWidget> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () {
+        showModalBottomSheet(
+            context: context,
+            builder: (context) => TodoActionSheet(
+                  widget.todo,
+                ));
+      },
       leading: Icon(
         Icons.task,
         color: Theme.of(context).primaryColor,

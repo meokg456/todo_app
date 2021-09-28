@@ -39,7 +39,7 @@ class _MainScreenState extends State<MainScreen> {
         builder: (context, createTodo) => FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
-            showDialog(context: context, builder: (context) => TodoDialog(note: "")).then((value) {
+            showDialog(context: context, builder: (context) => TodoDialog()).then((value) {
               if (value != null) {
                 createTodo(value);
               }
