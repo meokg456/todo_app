@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:todo_app/actions/create_todo_action/create_todo_action.dart';
 import 'package:todo_app/models/app_state/app_state.dart';
 import 'package:todo_app/screens/main_screen/completed_todos_tab/completed_todos_tab.dart';
 import 'package:todo_app/screens/main_screen/incomplete_todos_tab/incomplete_todos_tab.dart';
 import 'package:todo_app/screens/main_screen/todos_tab/todos_tab.dart';
+import 'package:todo_app/widgets/todo_dialog/todo_dialog.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -28,18 +30,22 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: StoreConnector<AppState, String>(
-          converter: (store) => _tabNames[_selectedIndex],
-          builder: (context, tabName) {
-            return Text(tabName);
-          },
-        ),
+        title: Text(_tabNames[_selectedIndex]),
         centerTitle: true,
       ),
       body: _tabViews[_selectedIndex],
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.edit),
-        onPressed: () {},
+      floatingActionButton: StoreConnector<AppState, Function(String)>(
+        converter: (store) => (String note) => store.dispatch(CreateTodoAction(note)),
+        builder: (context, createTodo) => FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            showDialog(context: context, builder: (context) => TodoDialog(note: "")).then((value) {
+              if (value != null) {
+                createTodo(value);
+              }
+            });
+          },
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
