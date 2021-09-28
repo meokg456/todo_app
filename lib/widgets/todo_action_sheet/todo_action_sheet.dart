@@ -22,6 +22,7 @@ class TodoActionSheet extends StatelessWidget {
           StoreConnector<AppState, Function(int id, String note)>(
             converter: (store) => (id, note) => store.dispatch(EditTodoAction(id, note)),
             builder: (context, editTodo) => ListTile(
+              key: Key("edit"),
               onTap: () {
                 showDialog(context: context, builder: (context) => TodoDialog(note: _todo.note)).then((value) {
                   if (value != null) {
@@ -40,6 +41,7 @@ class TodoActionSheet extends StatelessWidget {
           StoreConnector<AppState, Function(int id)>(
             converter: (store) => (id) => store.dispatch(DeleteTodoAction(id)),
             builder: (context, deleteTodo) => ListTile(
+              key: Key("delete"),
               onTap: () {
                 showDialog(
                         context: context,

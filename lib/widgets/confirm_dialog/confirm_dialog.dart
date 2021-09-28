@@ -27,12 +27,14 @@ class ConfirmDialog extends StatelessWidget {
       ),
       actions: <Widget>[
         TextButton(
+          key: Key("no"),
           child: Text("No"),
           onPressed: () {
             Navigator.of(context).pop(false);
           },
         ),
         TextButton(
+          key: Key("yes"),
           child: Text("Yes"),
           onPressed: () {
             Navigator.of(context).pop(true);

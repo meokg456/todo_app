@@ -37,6 +37,7 @@ class _MainScreenState extends State<MainScreen> {
       floatingActionButton: StoreConnector<AppState, Function(String)>(
         converter: (store) => (String note) => store.dispatch(CreateTodoAction(note)),
         builder: (context, createTodo) => FloatingActionButton(
+          key: Key("create"),
           child: Icon(Icons.add),
           onPressed: () {
             showDialog(context: context, builder: (context) => TodoDialog()).then((value) {
@@ -51,9 +52,24 @@ class _MainScreenState extends State<MainScreen> {
         currentIndex: _selectedIndex,
         onTap: onTabSelected,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.task), label: "Todos"),
-          BottomNavigationBarItem(icon: Icon(Icons.task), label: "Incomplete"),
-          BottomNavigationBarItem(icon: Icon(Icons.task), label: "Completed"),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.task,
+                key: const Key("todos"),
+              ),
+              label: "Todos"),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.task,
+                key: const Key("incomplete"),
+              ),
+              label: "Incomplete"),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.task,
+                key: const Key("completed"),
+              ),
+              label: "Completed"),
         ],
       ),
     );

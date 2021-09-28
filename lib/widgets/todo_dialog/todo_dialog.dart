@@ -37,6 +37,8 @@ class _TodoDialogState extends State<TodoDialog> {
         child: Form(
           key: _formKey,
           child: TextFormField(
+            key: Key("note"),
+            autofocus: true,
             validator: Validator.validateNote,
             controller: _textEditingController,
             decoration: InputDecoration(hintText: "Note..."),
@@ -58,6 +60,7 @@ class _TodoDialogState extends State<TodoDialog> {
             Container(
               width: screenSize.width * 0.3,
               child: ElevatedButton(
+                  key: Key("done"),
                   onPressed: () {
                     if (!_formKey.currentState!.validate()) return;
                     Navigator.pop(context, _textEditingController.text);

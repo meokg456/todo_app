@@ -20,6 +20,7 @@ class _TodoWidgetState extends State<TodoWidget> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      key: Key("todo${widget.todo.id}"),
       onTap: () {
         showModalBottomSheet(
             context: context,
@@ -37,6 +38,7 @@ class _TodoWidgetState extends State<TodoWidget> {
           store.dispatch(UpdateTodoStatusAction(widget.todo.id, !widget.todo.isCompleted));
         },
         builder: (context, onCheckBox) => Checkbox(
+          key: Key("checkbox${widget.todo.id}"),
           value: widget.todo.isCompleted,
           onChanged: onCheckBox,
         ),

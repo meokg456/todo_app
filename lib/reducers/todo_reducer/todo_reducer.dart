@@ -19,11 +19,15 @@ TodosModel _updateTodoStatus(TodosModel todosModel, UpdateTodoStatusAction actio
 
   return todosModel.rebuild((model) {
     if (action.isComplete ?? false) {
-      model.completedTodos.add(action.id);
+      model.completedTodos
+        ..add(action.id)
+        ..sort();
       model.incompleteTodos.remove(action.id);
     } else {
       model.completedTodos.remove(action.id);
-      model.incompleteTodos.add(action.id);
+      model.incompleteTodos
+        ..add(action.id)
+        ..sort();
     }
     return model
       ..todos.updateValue(action.id, (todo) => todo.rebuild((todo) => todo.isCompleted = action.isComplete ?? false));
