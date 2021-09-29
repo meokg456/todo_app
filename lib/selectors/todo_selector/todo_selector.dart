@@ -5,7 +5,7 @@ import 'package:todo_app/models/todo/todos_state.dart';
 import 'package:todo_app/models/todo_filter_type/todo_filter_type.dart';
 
 BuiltList<Todo> todosFilter(AppState appState, TodoFilterType type) {
-  var todosModel = appState.todosModel;
+  var todosModel = appState.todosState;
   switch (type) {
     case TodoFilterType.completed:
       return todosModel.completedTodos.map((id) => todosModel.todos[id]!).toBuiltList();

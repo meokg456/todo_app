@@ -8,6 +8,7 @@ import 'package:todo_app/models/app_state/app_state.dart';
 import 'package:todo_app/models/todo/todo.dart';
 import 'package:todo_app/models/todo/todos_state.dart';
 import 'package:todo_app/reducers/app_state_reducer.dart';
+import 'package:todo_app/repository/todo_repository/todo_repository.dart';
 import 'package:todo_app/screens/main_screen/main_screen.dart';
 import 'package:todo_app/services/sqlite_services/sqlite_services.dart';
 
@@ -16,7 +17,9 @@ void main() {
   final store = Store<AppState>(
     appStateReducer,
     initialState: AppState.init(),
-    middleware: [EpicMiddleware(todoEpics)],
+    middleware: [
+      EpicMiddleware(TodoMiddleware(TodoRepository()).call),
+    ],
   );
   runApp(TodoRedux(store));
 }

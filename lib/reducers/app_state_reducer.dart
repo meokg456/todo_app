@@ -4,6 +4,6 @@ import 'package:todo_app/reducers/todo_reducer/todo_reducer.dart';
 AppState appStateReducer(AppState appState, action) {
   return AppState(
     isLoading: false,
-    todosModel: todosReducer(appState.todosModel, action),
+    todosState: todosReducer(appState.todosState, action),
   );
 }

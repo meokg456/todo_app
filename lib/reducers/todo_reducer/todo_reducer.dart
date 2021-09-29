@@ -13,9 +13,8 @@ final todosReducer = combineReducers<TodosState>([
   TypedReducer(_startLoadTodos),
 ]);
 
-TodosState _updateTodoStatus(TodosState todosState, DoUpdateStatusTodoAction action) {
+TodosState _updateTodoStatus(TodosState todosState, SetUpdateStatusTodoAction action) {
   //update completed and incomplete todos list
-
   return todosState.rebuild((model) {
     if (action.isComplete ?? false) {
       model.completedTodos
@@ -33,7 +32,7 @@ TodosState _updateTodoStatus(TodosState todosState, DoUpdateStatusTodoAction act
   });
 }
 
-TodosState _createTodo(TodosState todosState, DoCreateTodoAction action) {
+TodosState _createTodo(TodosState todosState, SetCreateTodoAction action) {
   if (action.note.isEmpty) return todosState;
   int id = todosState.todos.length + 1;
   return todosState.rebuild((model) => model
@@ -44,7 +43,7 @@ TodosState _createTodo(TodosState todosState, DoCreateTodoAction action) {
     ..incompleteTodos.add(id));
 }
 
-TodosState _editTodo(TodosState todosState, DoEditTodoAction action) {
+TodosState _editTodo(TodosState todosState, SetEditTodoAction action) {
   if (action.note.isEmpty) return todosState;
   if (!todosState.todos.containsKey(action.id)) return todosState;
   return todosState.rebuild(
@@ -69,7 +68,7 @@ TodosState _startLoadTodos(TodosState todosState, SetLoadingTodoAction action) {
   return todosState.rebuild((todosState) => todosState..isLoading = true);
 }
 
-TodosState _deleteTodo(TodosState todosState, DoDeleteTodoAction action) {
+TodosState _deleteTodo(TodosState todosState, SetDeleteTodoAction action) {
   var todo = todosState.todos[action.id];
   if (todo == null) return todosState;
   return todosState.rebuild((model) {

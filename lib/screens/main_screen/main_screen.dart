@@ -52,7 +52,7 @@ class _MainScreenState extends State<MainScreen> {
                 key: Key("load"),
               ))
             : _tabViews[_selectedIndex],
-        converter: (store) => store.state.todosModel.isLoading,
+        converter: (store) => store.state.todosState.isLoading,
       ),
       floatingActionButton: StoreConnector<AppState, Function(String)>(
         converter: (store) => (String note) => store.dispatch(DoCreateTodoAction((action) => action..note = note)),
