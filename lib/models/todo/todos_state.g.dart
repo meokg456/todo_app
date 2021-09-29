@@ -1,68 +1,76 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'todos_model.dart';
+part of 'todos_state.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-class _$TodosModel extends TodosModel {
+class _$TodosState extends TodosState {
   @override
   final BuiltMap<int, Todo> todos;
   @override
   final BuiltList<int> completedTodos;
   @override
   final BuiltList<int> incompleteTodos;
+  @override
+  final bool isLoading;
 
-  factory _$TodosModel([void Function(TodosModelBuilder)? updates]) =>
-      (new TodosModelBuilder()..update(updates)).build();
+  factory _$TodosState([void Function(TodosStateBuilder)? updates]) =>
+      (new TodosStateBuilder()..update(updates)).build();
 
-  _$TodosModel._(
+  _$TodosState._(
       {required this.todos,
       required this.completedTodos,
-      required this.incompleteTodos})
+      required this.incompleteTodos,
+      required this.isLoading})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(todos, 'TodosModel', 'todos');
+    BuiltValueNullFieldError.checkNotNull(todos, 'TodosState', 'todos');
     BuiltValueNullFieldError.checkNotNull(
-        completedTodos, 'TodosModel', 'completedTodos');
+        completedTodos, 'TodosState', 'completedTodos');
     BuiltValueNullFieldError.checkNotNull(
-        incompleteTodos, 'TodosModel', 'incompleteTodos');
+        incompleteTodos, 'TodosState', 'incompleteTodos');
+    BuiltValueNullFieldError.checkNotNull(isLoading, 'TodosState', 'isLoading');
   }
 
   @override
-  TodosModel rebuild(void Function(TodosModelBuilder) updates) =>
+  TodosState rebuild(void Function(TodosStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  TodosModelBuilder toBuilder() => new TodosModelBuilder()..replace(this);
+  TodosStateBuilder toBuilder() => new TodosStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is TodosModel &&
+    return other is TodosState &&
         todos == other.todos &&
         completedTodos == other.completedTodos &&
-        incompleteTodos == other.incompleteTodos;
+        incompleteTodos == other.incompleteTodos &&
+        isLoading == other.isLoading;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, todos.hashCode), completedTodos.hashCode),
-        incompleteTodos.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, todos.hashCode), completedTodos.hashCode),
+            incompleteTodos.hashCode),
+        isLoading.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('TodosModel')
+    return (newBuiltValueToStringHelper('TodosState')
           ..add('todos', todos)
           ..add('completedTodos', completedTodos)
-          ..add('incompleteTodos', incompleteTodos))
+          ..add('incompleteTodos', incompleteTodos)
+          ..add('isLoading', isLoading))
         .toString();
   }
 }
 
-class TodosModelBuilder implements Builder<TodosModel, TodosModelBuilder> {
-  _$TodosModel? _$v;
+class TodosStateBuilder implements Builder<TodosState, TodosStateBuilder> {
+  _$TodosState? _$v;
 
   MapBuilder<int, Todo>? _todos;
   MapBuilder<int, Todo> get todos =>
@@ -81,39 +89,46 @@ class TodosModelBuilder implements Builder<TodosModel, TodosModelBuilder> {
   set incompleteTodos(ListBuilder<int>? incompleteTodos) =>
       _$this._incompleteTodos = incompleteTodos;
 
-  TodosModelBuilder();
+  bool? _isLoading;
+  bool? get isLoading => _$this._isLoading;
+  set isLoading(bool? isLoading) => _$this._isLoading = isLoading;
 
-  TodosModelBuilder get _$this {
+  TodosStateBuilder();
+
+  TodosStateBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _todos = $v.todos.toBuilder();
       _completedTodos = $v.completedTodos.toBuilder();
       _incompleteTodos = $v.incompleteTodos.toBuilder();
+      _isLoading = $v.isLoading;
       _$v = null;
     }
     return this;
   }
 
   @override
-  void replace(TodosModel other) {
+  void replace(TodosState other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$TodosModel;
+    _$v = other as _$TodosState;
   }
 
   @override
-  void update(void Function(TodosModelBuilder)? updates) {
+  void update(void Function(TodosStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$TodosModel build() {
-    _$TodosModel _$result;
+  _$TodosState build() {
+    _$TodosState _$result;
     try {
       _$result = _$v ??
-          new _$TodosModel._(
+          new _$TodosState._(
               todos: todos.build(),
               completedTodos: completedTodos.build(),
-              incompleteTodos: incompleteTodos.build());
+              incompleteTodos: incompleteTodos.build(),
+              isLoading: BuiltValueNullFieldError.checkNotNull(
+                  isLoading, 'TodosState', 'isLoading'));
     } catch (_) {
       late String _$failedField;
       try {
@@ -125,7 +140,7 @@ class TodosModelBuilder implements Builder<TodosModel, TodosModelBuilder> {
         incompleteTodos.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'TodosModel', _$failedField, e.toString());
+            'TodosState', _$failedField, e.toString());
       }
       rethrow;
     }

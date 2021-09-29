@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:todo_app/actions/delete_todo_action/delete_todo_action.dart';
-import 'package:todo_app/actions/edit_todo_action/edit_todo_action.dart';
+import 'package:todo_app/actions/todo_actions/todo_actions.dart';
 import 'package:todo_app/models/app_state/app_state.dart';
 import 'package:todo_app/models/todo/todo.dart';
 import 'package:todo_app/widgets/confirm_dialog/confirm_dialog.dart';
@@ -20,7 +19,9 @@ class TodoActionSheet extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           StoreConnector<AppState, Function(int id, String note)>(
-            converter: (store) => (id, note) => store.dispatch(EditTodoAction(id, note)),
+            converter: (store) => (id, note) => store.dispatch(DoEditTodoAction((action) => action
+              ..note = note
+              ..id = id)),
             builder: (context, editTodo) => ListTile(
               key: Key("edit"),
               onTap: () {
@@ -39,7 +40,7 @@ class TodoActionSheet extends StatelessWidget {
             ),
           ),
           StoreConnector<AppState, Function(int id)>(
-            converter: (store) => (id) => store.dispatch(DeleteTodoAction(id)),
+            converter: (store) => (id) => store.dispatch(DoDeleteTodoAction((action) => action..id = id)),
             builder: (context, deleteTodo) => ListTile(
               key: Key("delete"),
               onTap: () {

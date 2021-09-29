@@ -1,7 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:todo_app/models/app_state/app_state.dart';
 import 'package:todo_app/models/todo/todo.dart';
-import 'package:todo_app/models/todo/todos_model.dart';
+import 'package:todo_app/models/todo/todos_state.dart';
 import 'package:todo_app/models/todo_filter_type/todo_filter_type.dart';
 
 BuiltList<Todo> todosFilter(AppState appState, TodoFilterType type) {

@@ -1,64 +1,70 @@
-import 'package:built_collection/built_collection.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:todo_app/actions/create_todo_action/create_todo_action.dart';
-import 'package:todo_app/actions/delete_todo_action/delete_todo_action.dart';
-import 'package:todo_app/actions/edit_todo_action/edit_todo_action.dart';
-import 'package:todo_app/actions/update_todo_status_action/update_todo_status_action.dart';
+import 'package:todo_app/actions/todo_actions/todo_actions.dart';
 import 'package:todo_app/models/app_state/app_state.dart';
 import 'package:todo_app/models/todo/todo.dart';
-import 'package:todo_app/models/todo/todos_model.dart';
+import 'package:todo_app/models/todo/todos_state.dart';
 import 'package:todo_app/reducers/todo_reducer/todo_reducer.dart';
 
 void main() {
   group("Test todo reducer", () {
     AppState? firstState;
-    TodosModel Function({required int id, bool? isComplete})? updateTodoStatusReducer;
-    TodosModel Function({required String note})? createTodoReducer;
-    TodosModel Function({required int id, required String note})? editTodoReducer;
-    TodosModel Function({required int id})? deleteTodoReducer;
+    TodosState Function({required int id, bool? isComplete})? updateTodoStatusReducer;
+    TodosState Function({required String note})? createTodoReducer;
+    TodosState Function({required int id, required String note})? editTodoReducer;
+    TodosState Function({required int id})? deleteTodoReducer;
     setUp(() {
       firstState = AppState.init();
       updateTodoStatusReducer = ({required int id, bool? isComplete}) {
-        return todosReducer(firstState!.todosModel, UpdateTodoStatusAction(id, isComplete));
+        return todosReducer(
+            firstState!.todosModel,
+            DoUpdateStatusTodoAction((action) => action
+              ..isComplete = isComplete
+              ..id = id));
       };
       createTodoReducer = ({required String note}) {
-        return todosReducer(firstState!.todosModel, CreateTodoAction(note));
+        return todosReducer(firstState!.todosModel, DoCreateTodoAction((action) => action..note = note));
       };
       editTodoReducer = ({required int id, required String note}) {
-        return todosReducer(firstState!.todosModel, EditTodoAction(id, note));
+        return todosReducer(
+            firstState!.todosModel,
+            DoEditTodoAction((action) => action
+              ..id = id
+              ..note = note));
       };
       deleteTodoReducer = ({required int id}) {
-        return todosReducer(firstState!.todosModel, DeleteTodoAction(id));
+        return todosReducer(firstState!.todosModel, DoDeleteTodoAction((action) => action..id = id));
       };
     });
 
     group("Test Update todo status action", () {
       test("Update todo status to true", () {
-        final TodosModel modifiedModel = updateTodoStatusReducer!(id: 2, isComplete: true);
+        final TodosState modifiedModel = updateTodoStatusReducer!(id: 2, isComplete: true);
         expect(
             modifiedModel,
             firstState!.todosModel.rebuild((model) => model
               ..todos.updateValue(2, (todo) => todo.rebuild((todo) => todo.isCompleted = true))
               ..incompleteTodos.remove(2)
-              ..completedTodos.add(2)));
+              ..completedTodos.add(2)
+              ..completedTodos.sort()));
       });
       test("Update todo status to false", () {
-        final TodosModel modifiedModel = updateTodoStatusReducer!(id: 1, isComplete: false);
+        final TodosState modifiedModel = updateTodoStatusReducer!(id: 1, isComplete: false);
         expect(
             modifiedModel,
             firstState!.todosModel.rebuild((model) => model
               ..todos.updateValue(1, (todo) => todo.rebuild((todo) => todo.isCompleted = false))
               ..incompleteTodos.add(1)
+              ..incompleteTodos.sort()
               ..completedTodos.remove(1)));
       });
       test("Update todo status to null", () {
-        final TodosModel modifiedModel = updateTodoStatusReducer!(id: 1, isComplete: null);
+        final TodosState modifiedModel = updateTodoStatusReducer!(id: 1, isComplete: null);
         expect(
             modifiedModel,
             firstState!.todosModel.rebuild((model) => model
               ..todos.updateValue(1, (todo) => todo.rebuild((todo) => todo.isCompleted = false))
               ..incompleteTodos.add(1)
+              ..incompleteTodos.sort()
               ..completedTodos.remove(1)));
       });
     });

@@ -1,23 +1,22 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:redux/redux.dart';
-import 'package:todo_app/actions/create_todo_action/create_todo_action.dart';
-import 'package:todo_app/actions/delete_todo_action/delete_todo_action.dart';
-import 'package:todo_app/actions/edit_todo_action/edit_todo_action.dart';
-import 'package:todo_app/actions/update_todo_status_action/update_todo_status_action.dart';
+import 'package:todo_app/actions/todo_actions/todo_actions.dart';
 import 'package:todo_app/models/todo/todo.dart';
-import 'package:todo_app/models/todo/todos_model.dart';
+import 'package:todo_app/models/todo/todos_state.dart';
 
-final todosReducer = combineReducers<TodosModel>([
+final todosReducer = combineReducers<TodosState>([
   TypedReducer(_updateTodoStatus),
   TypedReducer(_createTodo),
   TypedReducer(_editTodo),
   TypedReducer(_deleteTodo),
+  TypedReducer(_readTodos),
+  TypedReducer(_startLoadTodos),
 ]);
 
-TodosModel _updateTodoStatus(TodosModel todosModel, UpdateTodoStatusAction action) {
+TodosState _updateTodoStatus(TodosState todosState, DoUpdateStatusTodoAction action) {
   //update completed and incomplete todos list
 
-  return todosModel.rebuild((model) {
+  return todosState.rebuild((model) {
     if (action.isComplete ?? false) {
       model.completedTodos
         ..add(action.id)
@@ -34,10 +33,10 @@ TodosModel _updateTodoStatus(TodosModel todosModel, UpdateTodoStatusAction actio
   });
 }
 
-TodosModel _createTodo(TodosModel todosModel, CreateTodoAction action) {
-  if (action.note.isEmpty) return todosModel;
-  int id = todosModel.todos.length + 1;
-  return todosModel.rebuild((model) => model
+TodosState _createTodo(TodosState todosState, DoCreateTodoAction action) {
+  if (action.note.isEmpty) return todosState;
+  int id = todosState.todos.length + 1;
+  return todosState.rebuild((model) => model
     ..todos[id] = Todo((todo) => todo
       ..note = action.note
       ..isCompleted = false
@@ -45,17 +44,35 @@ TodosModel _createTodo(TodosModel todosModel, CreateTodoAction action) {
     ..incompleteTodos.add(id));
 }
 
-TodosModel _editTodo(TodosModel todosModel, EditTodoAction action) {
-  if (action.note.isEmpty) return todosModel;
-  if (!todosModel.todos.containsKey(action.id)) return todosModel;
-  return todosModel.rebuild(
+TodosState _editTodo(TodosState todosState, DoEditTodoAction action) {
+  if (action.note.isEmpty) return todosState;
+  if (!todosState.todos.containsKey(action.id)) return todosState;
+  return todosState.rebuild(
       (model) => model..todos.updateValue(action.id, (todo) => todo.rebuild((todo) => todo..note = action.note)));
 }
 
-TodosModel _deleteTodo(TodosModel todosModel, DeleteTodoAction action) {
-  var todo = todosModel.todos[action.id];
-  if (todo == null) return todosModel;
-  return todosModel.rebuild((model) {
+TodosState _readTodos(TodosState todosState, SetReadTodoAction action) {
+  return todosState.rebuild((todosState) {
+    action.todos.forEach((todo) {
+      todosState.todos[todo.id] = todo;
+      if (todo.isCompleted) {
+        todosState.completedTodos.add(todo.id);
+      } else {
+        todosState.incompleteTodos.add(todo.id);
+      }
+    });
+    return todosState..isLoading = false;
+  });
+}
+
+TodosState _startLoadTodos(TodosState todosState, SetLoadingTodoAction action) {
+  return todosState.rebuild((todosState) => todosState..isLoading = true);
+}
+
+TodosState _deleteTodo(TodosState todosState, DoDeleteTodoAction action) {
+  var todo = todosState.todos[action.id];
+  if (todo == null) return todosState;
+  return todosState.rebuild((model) {
     if (todo.isCompleted) {
       model.completedTodos.remove(todo.id);
     } else {

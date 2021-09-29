@@ -49,8 +49,6 @@ void main() {
       var todos = find.byValueKey("todos");
       await driver.tap(todos);
       await driver.waitFor(todos);
-
-      await Future.delayed(Duration(seconds: 2));
     });
 
     test("Create todo", () async {
@@ -68,8 +66,6 @@ void main() {
       await driver.waitFor(note);
 
       await driver.tap(done);
-
-      await Future.delayed(Duration(milliseconds: 2000));
     });
 
     test("Edit todo", () async {
@@ -93,7 +89,6 @@ void main() {
       await driver.waitFor(note);
 
       await driver.tap(done);
-      await Future.delayed(Duration(milliseconds: 1000));
     });
 
     test("Delete todo", () async {
@@ -117,8 +112,6 @@ void main() {
 
       var yes = find.byValueKey("yes");
       await driver.tap(yes);
-
-      await Future.delayed(Duration(milliseconds: 2000));
     });
   });
 }
