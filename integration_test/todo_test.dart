@@ -6,7 +6,36 @@ import 'package:todo_app/main.dart' as app;
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
   group("Todo test", () {
+    var todos = ["Wake up", "Do exercises", "Eat breakfast", "Go to school", "Have lunch", "Sleep"];
+
+    testWidgets("Create todo", (tester) async {
+      app.main();
+      for (int i = 0; i < 6; i++) {
+        await tester.pumpAndSettle();
+
+        var fab = find.byKey(Key("create"));
+        await tester.tap(fab);
+        await tester.pumpAndSettle();
+
+        var note = find.byKey(Key("note"));
+        var done = find.byKey(Key("done"));
+        await tester.tap(done);
+        await tester.pumpAndSettle();
+
+        await tester.enterText(note, todos[i]);
+        await tester.pumpAndSettle();
+
+        expect(find.text(todos[i]), findsOneWidget);
+
+        await tester.tap(done);
+        await tester.pumpAndSettle();
+
+        expect(find.text(todos[i]), findsOneWidget);
+      }
+    });
+
     testWidgets("Update todo status", (tester) async {
       app.main();
       await tester.pumpAndSettle();
@@ -15,7 +44,7 @@ void main() {
       await tester.tap(checkbox1);
       await tester.pumpAndSettle();
 
-      expect((checkbox1.evaluate().first.widget as Checkbox).value, false);
+      expect((checkbox1.evaluate().first.widget as Checkbox).value, true);
 
       var checkbox2 = find.byKey(Key("checkbox2"));
       await tester.tap(checkbox2);
@@ -28,6 +57,23 @@ void main() {
       await tester.pumpAndSettle();
 
       expect((checkbox5.evaluate().first.widget as Checkbox).value, true);
+
+      var completed = find.byKey(Key("completed"));
+
+      await tester.tap(completed);
+      await tester.pumpAndSettle();
+
+      checkbox1 = find.byKey(Key("checkbox1"));
+      await tester.tap(checkbox1);
+      await tester.pumpAndSettle();
+
+      expect(checkbox1, findsNothing);
+
+      checkbox5 = find.byKey(Key("checkbox5"));
+      await tester.tap(checkbox5);
+      await tester.pumpAndSettle();
+
+      expect(checkbox5, findsNothing);
 
       var incomplete = find.byKey(Key("incomplete"));
 
@@ -45,55 +91,10 @@ void main() {
       await tester.pumpAndSettle();
       expect(checkbox6, findsNothing);
 
-      var completed = find.byKey(Key("completed"));
-
-      await tester.tap(completed);
-      await tester.pumpAndSettle();
-
-      checkbox6 = find.byKey(Key("checkbox6"));
-      await tester.tap(checkbox6);
-      await tester.pumpAndSettle();
-
-      expect(checkbox6, findsNothing);
-
-      checkbox5 = find.byKey(Key("checkbox5"));
-      await tester.tap(checkbox5);
-      await tester.pumpAndSettle();
-
-      expect(checkbox5, findsNothing);
-
       var todos = find.byKey(Key("todos"));
 
       await tester.tap(todos);
       await tester.pumpAndSettle();
-
-      await Future.delayed(Duration(seconds: 2));
-    });
-
-    testWidgets("Create todo", (tester) async {
-      app.main();
-      await tester.pumpAndSettle();
-
-      var fab = find.byKey(Key("create"));
-      await tester.tap(fab);
-      await tester.pumpAndSettle();
-
-      var note = find.byKey(Key("note"));
-      var done = find.byKey(Key("done"));
-      await tester.tap(done);
-      await tester.pumpAndSettle();
-
-      await tester.enterText(note, "Sleep");
-      await tester.pumpAndSettle();
-
-      expect(find.text("Sleep"), findsOneWidget);
-
-      await tester.tap(done);
-      await tester.pumpAndSettle();
-
-      expect(find.text("Sleep"), findsOneWidget);
-
-      await Future.delayed(Duration(seconds: 2));
     });
 
     testWidgets("Edit todo", (tester) async {
@@ -118,17 +119,15 @@ void main() {
       await tester.tap(done);
       await tester.pumpAndSettle();
 
-      await tester.enterText(note, "Sleep");
+      await tester.enterText(note, "Dream");
       await tester.pumpAndSettle();
 
-      expect(find.text("Sleep"), findsOneWidget);
+      expect(find.text("Dream"), findsOneWidget);
 
       await tester.tap(done);
       await tester.pumpAndSettle();
 
-      expect(find.text("Sleep"), findsOneWidget);
-
-      await Future.delayed(Duration(seconds: 2));
+      expect(find.text("Dream"), findsOneWidget);
     });
 
     testWidgets("Delete todo", (tester) async {

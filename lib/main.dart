@@ -11,14 +11,13 @@ import 'package:todo_app/reducers/app_state_reducer.dart';
 import 'package:todo_app/screens/main_screen/main_screen.dart';
 import 'package:todo_app/services/sqlite_services/sqlite_services.dart';
 
-Future<void> main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
   final store = Store<AppState>(
     appStateReducer,
     initialState: AppState.init(),
     middleware: [EpicMiddleware(todoEpics)],
   );
-  await SqliteServices.init();
   runApp(TodoRedux(store));
 }
 

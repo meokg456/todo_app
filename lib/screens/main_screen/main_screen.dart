@@ -25,6 +25,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     SchedulerBinding.instance?.addPostFrameCallback((timeStamp) async {
+      await SqliteServices.init();
       StoreProvider.of<AppState>(context).dispatch(SetLoadingTodoAction());
       StoreProvider.of<AppState>(context).dispatch(DoReadTodoAction());
     });
@@ -45,8 +46,12 @@ class _MainScreenState extends State<MainScreen> {
         centerTitle: true,
       ),
       body: StoreConnector<AppState, bool>(
-        builder: (context, isLoading) =>
-            isLoading ? Center(child: CircularProgressIndicator()) : _tabViews[_selectedIndex],
+        builder: (context, isLoading) => isLoading
+            ? Center(
+                child: CircularProgressIndicator(
+                key: Key("load"),
+              ))
+            : _tabViews[_selectedIndex],
         converter: (store) => store.state.todosModel.isLoading,
       ),
       floatingActionButton: StoreConnector<AppState, Function(String)>(

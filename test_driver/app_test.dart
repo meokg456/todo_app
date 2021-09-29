@@ -4,13 +4,34 @@ import 'package:test/test.dart';
 void main() {
   group("Update todo status", () {
     late FlutterDriver driver;
-
+    var todos = ["Wake up", "Do exercises", "Eat breakfast", "Go to school", "Have lunch", "Sleep"];
     setUpAll(() async {
       driver = await FlutterDriver.connect();
     });
 
     tearDownAll(() async {
       await driver.close();
+    });
+
+    test("Create todo", () async {
+      var loading = find.byValueKey("load");
+      driver.waitForAbsent(loading);
+      for (int i = 0; i < todos.length; i++) {
+        var fab = find.byValueKey("create");
+        await driver.tap(fab);
+        await driver.waitFor(fab);
+
+        var note = find.byValueKey("note");
+        var done = find.byValueKey("done");
+        await driver.tap(done);
+        await driver.waitFor(note);
+        await driver.waitFor(done);
+
+        await driver.enterText(todos[i]);
+        await driver.waitFor(note);
+
+        await driver.tap(done);
+      }
     });
 
     test("Update todo status", () async {
@@ -30,7 +51,7 @@ void main() {
       await driver.tap(incomplete);
       await driver.waitFor(incomplete);
 
-      checkbox1 = find.byValueKey("checkbox1");
+      checkbox1 = find.byValueKey("checkbox3");
       await driver.tap(checkbox1);
 
       var checkbox6 = find.byValueKey("checkbox6");
@@ -49,23 +70,6 @@ void main() {
       var todos = find.byValueKey("todos");
       await driver.tap(todos);
       await driver.waitFor(todos);
-    });
-
-    test("Create todo", () async {
-      var fab = find.byValueKey("create");
-      await driver.tap(fab);
-      await driver.waitFor(fab);
-
-      var note = find.byValueKey("note");
-      var done = find.byValueKey("done");
-      await driver.tap(done);
-      await driver.waitFor(note);
-      await driver.waitFor(done);
-
-      await driver.enterText("Sleep");
-      await driver.waitFor(note);
-
-      await driver.tap(done);
     });
 
     test("Edit todo", () async {
