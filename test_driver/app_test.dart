@@ -7,6 +7,7 @@ void main() {
     var todos = ["Wake up", "Do exercises", "Eat breakfast", "Go to school", "Have lunch", "Sleep"];
     setUpAll(() async {
       driver = await FlutterDriver.connect();
+      await driver.waitUntilFirstFrameRasterized();
     });
 
     tearDownAll(() async {

@@ -1,12 +1,14 @@
+import 'package:injectable/injectable.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:todo_app/actions/todo_actions/todo_actions.dart';
 import 'package:todo_app/models/app_state/app_state.dart';
 import 'package:todo_app/repository/todo_repository/todo_repository.dart';
 
+@injectable
 class TodoMiddleware implements EpicClass<AppState> {
   final AbstractTodoRepository todoRepository;
 
-  TodoMiddleware(this.todoRepository);
+  TodoMiddleware(@Named.from(TodoRepository) this.todoRepository);
 
   @override
   Stream call(Stream<dynamic> actions, EpicStore<AppState> store) {

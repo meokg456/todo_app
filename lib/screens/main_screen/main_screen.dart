@@ -3,11 +3,15 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:todo_app/actions/todo_actions/todo_actions.dart';
+import 'package:todo_app/dependency.dart';
+import 'package:todo_app/middlewares/todo_middleware/todo_middleware.dart';
 import 'package:todo_app/models/app_state/app_state.dart';
+import 'package:todo_app/repository/todo_repository/todo_repository.dart';
 import 'package:todo_app/screens/main_screen/completed_todos_tab/completed_todos_tab.dart';
 import 'package:todo_app/screens/main_screen/incomplete_todos_tab/incomplete_todos_tab.dart';
 import 'package:todo_app/screens/main_screen/todos_tab/todos_tab.dart';
-import 'package:todo_app/services/sqlite_services/sqlite_services.dart';
+import 'package:todo_app/services/todo_services/abstract_todo_services.dart';
+import 'package:todo_app/services/todo_services/sqlite_todo_services.dart';
 import 'package:todo_app/widgets/todo_dialog/todo_dialog.dart';
 
 class MainScreen extends StatefulWidget {
@@ -25,7 +29,6 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     SchedulerBinding.instance?.addPostFrameCallback((timeStamp) async {
-      await SqliteServices.init();
       StoreProvider.of<AppState>(context).dispatch(SetLoadingTodoAction());
       StoreProvider.of<AppState>(context).dispatch(DoReadTodoAction());
     });

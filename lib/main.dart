@@ -1,8 +1,10 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:get_it/get_it.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_epics/redux_epics.dart';
+import 'package:todo_app/dependency.dart';
 import 'package:todo_app/middlewares/todo_middleware/todo_middleware.dart';
 import 'package:todo_app/models/app_state/app_state.dart';
 import 'package:todo_app/models/todo/todo.dart';
@@ -10,15 +12,18 @@ import 'package:todo_app/models/todo/todos_state.dart';
 import 'package:todo_app/reducers/app_state_reducer.dart';
 import 'package:todo_app/repository/todo_repository/todo_repository.dart';
 import 'package:todo_app/screens/main_screen/main_screen.dart';
-import 'package:todo_app/services/sqlite_services/sqlite_services.dart';
+import 'package:todo_app/services/todo_services/abstract_todo_services.dart';
+import 'package:todo_app/services/todo_services/sqlite_todo_services.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  configureDependencies();
+  await getIt.allReady();
   final store = Store<AppState>(
     appStateReducer,
     initialState: AppState.init(),
     middleware: [
-      EpicMiddleware(TodoMiddleware(TodoRepository()).call),
+      EpicMiddleware(getIt.get<TodoMiddleware>().call),
     ],
   );
   runApp(TodoRedux(store));
