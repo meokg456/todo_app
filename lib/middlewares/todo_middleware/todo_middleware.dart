@@ -24,9 +24,10 @@ class TodoMiddleware implements EpicClass<AppState> {
   Stream<dynamic> createTodoEpic(Stream<dynamic> actions, EpicStore<AppState> store) {
     return actions.where((action) => action is DoCreateTodoAction).asyncMap((action) {
       action = action as DoCreateTodoAction;
+      if (action.note.isEmpty) return null;
       return todoRepository
           .createTodo(action.note)
-          .then((value) => SetCreateTodoAction((reducerAction) => reducerAction..note = action.note));
+          .then((value) => SetCreateTodoAction((reducerAction) => reducerAction..todo = value.toBuilder()));
     });
   }
 
@@ -44,6 +45,7 @@ class TodoMiddleware implements EpicClass<AppState> {
   Stream<dynamic> updateTodoNoteEpic(Stream<dynamic> actions, EpicStore<AppState> store) {
     return actions.where((action) => action is DoEditTodoAction).asyncMap((action) {
       action = action as DoEditTodoAction;
+      if (action.note.isEmpty) return null;
       return todoRepository
           .updateTodoNote(action.id, action.note)
           .then((value) => SetEditTodoAction((reducerAction) => reducerAction

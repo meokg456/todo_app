@@ -33,13 +33,10 @@ TodosState _updateTodoStatus(TodosState todosState, SetUpdateStatusTodoAction ac
 }
 
 TodosState _createTodo(TodosState todosState, SetCreateTodoAction action) {
-  if (action.note.isEmpty) return todosState;
+  if (action.todo.note.isEmpty) return todosState;
   int id = todosState.todos.length + 1;
   return todosState.rebuild((model) => model
-    ..todos[id] = Todo((todo) => todo
-      ..note = action.note
-      ..isCompleted = false
-      ..id = id)
+    ..todos[id] = action.todo
     ..incompleteTodos.add(id));
 }
 

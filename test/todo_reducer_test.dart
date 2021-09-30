@@ -11,7 +11,7 @@ void main() {
     var todos = ["Wake up", "Do exercises", "Eat breakfast", "Go to school", "Have lunch", "Sleep"];
     late AppState firstState;
     late TodosState Function({required int id, bool? isComplete}) updateTodoStatusReducer;
-    late TodosState Function({required String note}) createTodoReducer;
+    late TodosState Function({required Todo todo}) createTodoReducer;
     late TodosState Function({required int id, required String note}) editTodoReducer;
     late TodosState Function({required int id}) deleteTodoReducer;
     late TodosState Function() readTodoReducer;
@@ -34,8 +34,8 @@ void main() {
               ..isComplete = isComplete
               ..id = id));
       };
-      createTodoReducer = ({required String note}) {
-        return todosReducer(firstState.todosState, SetCreateTodoAction((action) => action..note = note));
+      createTodoReducer = ({required Todo todo}) {
+        return todosReducer(firstState.todosState, SetCreateTodoAction((action) => action..todo = todo.toBuilder()));
       };
       editTodoReducer = ({required int id, required String note}) {
         return todosReducer(
@@ -96,7 +96,11 @@ void main() {
       test("Create todo with note", () {
         String note = "Sleep";
         int id = firstState.todosState.todos.length + 1;
-        final modifiedModel = createTodoReducer(note: note);
+        final modifiedModel = createTodoReducer(
+            todo: Todo((todo) => todo
+              ..note = note
+              ..id = id
+              ..isCompleted = false));
         expect(
             modifiedModel,
             firstState.todosState.rebuild((model) => model
@@ -108,7 +112,11 @@ void main() {
       });
       test("Create todo with empty note", () {
         String note = "";
-        final modifiedModel = createTodoReducer(note: note);
+        final modifiedModel = createTodoReducer(
+            todo: Todo((todo) => todo
+              ..note = note
+              ..id = firstState.todosState.todos.length + 1
+              ..isCompleted = false));
         expect(modifiedModel, firstState.todosState);
       });
     });

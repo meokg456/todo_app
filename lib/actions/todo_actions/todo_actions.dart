@@ -5,7 +5,7 @@ import 'package:todo_app/models/todo/todo.dart';
 part 'todo_actions.g.dart';
 
 abstract class SetCreateTodoAction implements Built<SetCreateTodoAction, SetCreateTodoActionBuilder> {
-  String get note;
+  Todo get todo;
 
   SetCreateTodoAction._();
 

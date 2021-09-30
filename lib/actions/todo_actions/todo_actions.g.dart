@@ -8,14 +8,14 @@ part of 'todo_actions.dart';
 
 class _$SetCreateTodoAction extends SetCreateTodoAction {
   @override
-  final String note;
+  final Todo todo;
 
   factory _$SetCreateTodoAction(
           [void Function(SetCreateTodoActionBuilder)? updates]) =>
       (new SetCreateTodoActionBuilder()..update(updates)).build();
 
-  _$SetCreateTodoAction._({required this.note}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(note, 'SetCreateTodoAction', 'note');
+  _$SetCreateTodoAction._({required this.todo}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(todo, 'SetCreateTodoAction', 'todo');
   }
 
   @override
@@ -30,18 +30,18 @@ class _$SetCreateTodoAction extends SetCreateTodoAction {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is SetCreateTodoAction && note == other.note;
+    return other is SetCreateTodoAction && todo == other.todo;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, note.hashCode));
+    return $jf($jc(0, todo.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('SetCreateTodoAction')
-          ..add('note', note))
+          ..add('todo', todo))
         .toString();
   }
 }
@@ -50,16 +50,16 @@ class SetCreateTodoActionBuilder
     implements Builder<SetCreateTodoAction, SetCreateTodoActionBuilder> {
   _$SetCreateTodoAction? _$v;
 
-  String? _note;
-  String? get note => _$this._note;
-  set note(String? note) => _$this._note = note;
+  TodoBuilder? _todo;
+  TodoBuilder get todo => _$this._todo ??= new TodoBuilder();
+  set todo(TodoBuilder? todo) => _$this._todo = todo;
 
   SetCreateTodoActionBuilder();
 
   SetCreateTodoActionBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _note = $v.note;
+      _todo = $v.todo.toBuilder();
       _$v = null;
     }
     return this;
@@ -78,10 +78,20 @@ class SetCreateTodoActionBuilder
 
   @override
   _$SetCreateTodoAction build() {
-    final _$result = _$v ??
-        new _$SetCreateTodoAction._(
-            note: BuiltValueNullFieldError.checkNotNull(
-                note, 'SetCreateTodoAction', 'note'));
+    _$SetCreateTodoAction _$result;
+    try {
+      _$result = _$v ?? new _$SetCreateTodoAction._(todo: todo.build());
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'todo';
+        todo.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'SetCreateTodoAction', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }
