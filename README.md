@@ -123,5 +123,5 @@ We can adjust how many times slower we want.
 > }
 > ```
 
-![](./assets/images/performance_overlay.PNG)
+![](./assets/images/performance_overlay.png)
 
