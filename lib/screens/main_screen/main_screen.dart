@@ -38,7 +38,6 @@ class _MainScreenState extends State<MainScreen> {
   void onTabSelected(int index) {
     setState(() {
       _selectedIndex = index;
-      print("Selected tab: $_selectedIndex");
     });
   }
 

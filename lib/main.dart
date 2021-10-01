@@ -39,6 +39,7 @@ class TodoRedux extends StatelessWidget {
       store: store,
       child: MaterialApp(
         title: 'Todo Redux',
+        showPerformanceOverlay: true,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
