@@ -14,18 +14,18 @@ DevTools is a powerful tools run in browsers which support variety of features:
 
 - logging view
 
-  ![](.\assets\images\devtools.png)
+  ![](./assets/images/devtools.png)
 
-  ![](.\assets\images\devtools_view.PNG)
+  ![](./assets/images/devtools_view.PNG)
 
 ## Setting breakpoints
 - We can set breakpoints in our IDE. For example in android studio:
 
-![](.\assets\images\breakpoint.PNG)
+![](./assets/images/breakpoint.PNG)
 
 - And when we run the app in debug mode the app will stop at the breakpoint that was set.
 
-![](.\assets\images\meet_breakpoint.PNG)
+![](./assets/images/meet_breakpoint.PNG)
 
 - In here, we will can look at variables value to find out where make bugs.
 
@@ -33,7 +33,7 @@ DevTools is a powerful tools run in browsers which support variety of features:
 
 - If we're using [Flutter enabled IDE/editor](https://flutter.dev/docs/get-started/editor), the Dart analyzer is already checking our code and looking for possible mistakes:
 
-![](.\assets\images\dart_analyzer.PNG)
+![](./assets/images/dart_analyzer.PNG)
 
 - If not we can run flutter analyze
 - Dart analyzer help us to prevent some annotation bugs by avoiding `var`, untyped arguments, untyped list literals, and so on.
@@ -42,13 +42,13 @@ DevTools is a powerful tools run in browsers which support variety of features:
 
 Another useful debugging tool is logging. From logging, we can read stack trace of an exception, our `print()` logging in the console.
 
-![](.\assets\images\logging.PNG)
+![](./assets/images/logging.PNG)
 
 ## Assertions
 
 - During development, we can also use `assert` to detect unexpected value of a variable.
 
-![](.\assets\images\assert.PNG)
+![](./assets/images/assert.PNG)
 
 - When an unexpected value appeared, it's reported to the console.
 
@@ -58,7 +58,7 @@ The easiest way to debug animations is to slow them down. We can slow animations
 
 - By DevTools inspector:
 
-![](.\assets\images\slow_animation_devtools.png)
+![](./assets/images/slow_animation_devtools.png)
 
 This will make animations slower than normal 5 times
 
@@ -99,7 +99,7 @@ We can adjust how many times slower we want.
 
 - To perform a performance trade, we can use DevTools Timeline view
 
-![](.\assets\images\timeline_view.png)
+![](./assets/images/timeline_view.png)
 
 - We should run this Timeline in profile mode to ensure the runtime performance characteristics closely matches that of your final product.
 
@@ -123,5 +123,5 @@ We can adjust how many times slower we want.
 > }
 > ```
 
-![](.\assets\images\performance_overlay.PNG)
+![](./assets/images/performance_overlay.PNG)
 
