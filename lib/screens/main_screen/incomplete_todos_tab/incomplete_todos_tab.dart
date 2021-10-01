@@ -26,6 +26,7 @@ class _IncompleteTodosTabState extends State<IncompleteTodosTab> {
                 return TodoWidget(todos[index]);
               });
         },
+        distinct: true,
         converter: (store) => todosFilter(store.state, TodoFilterType.incomplete),
       ),
     );

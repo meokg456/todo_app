@@ -26,6 +26,7 @@ class _TodoTabState extends State<TodosTab> {
                 return TodoWidget(todos[index]);
               });
         },
+        distinct: true,
         converter: (store) => todosFilter(store.state, TodoFilterType.all),
       ),
     );

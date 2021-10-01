@@ -56,9 +56,11 @@ class _MainScreenState extends State<MainScreen> {
               ))
             : _tabViews[_selectedIndex],
         converter: (store) => store.state.todosState.isLoading,
+        distinct: true,
       ),
       floatingActionButton: StoreConnector<AppState, Function(String)>(
         converter: (store) => (String note) => store.dispatch(DoCreateTodoAction((action) => action..note = note)),
+        distinct: true,
         builder: (context, createTodo) => FloatingActionButton(
           key: Key("create"),
           child: Icon(Icons.add),

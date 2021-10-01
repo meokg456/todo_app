@@ -22,6 +22,7 @@ class TodoActionSheet extends StatelessWidget {
             converter: (store) => (id, note) => store.dispatch(DoEditTodoAction((action) => action
               ..note = note
               ..id = id)),
+            distinct: true,
             builder: (context, editTodo) => ListTile(
               key: Key("edit"),
               onTap: () {
@@ -41,6 +42,7 @@ class TodoActionSheet extends StatelessWidget {
           ),
           StoreConnector<AppState, Function(int id)>(
             converter: (store) => (id) => store.dispatch(DoDeleteTodoAction((action) => action..id = id)),
+            distinct: true,
             builder: (context, deleteTodo) => ListTile(
               key: Key("delete"),
               onTap: () {

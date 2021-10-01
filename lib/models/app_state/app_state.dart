@@ -9,7 +9,6 @@ class AppState {
     ..incompleteTodos = ListBuilder([])
     ..completedTodos = ListBuilder([])
     ..isLoading = false);
-  bool isLoading = false;
   AppState.init();
-  AppState({this.isLoading = false, required this.todosState});
+  AppState({required this.todosState});
 }

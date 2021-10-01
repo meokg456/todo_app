@@ -37,6 +37,7 @@ class _TodoWidgetState extends State<TodoWidget> {
             ..id = widget.todo.id
             ..isComplete = !widget.todo.isCompleted));
         },
+        distinct: true,
         builder: (context, onCheckBox) => Checkbox(
           key: Key("checkbox${widget.todo.id}"),
           value: widget.todo.isCompleted,
